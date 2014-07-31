@@ -1,0 +1,25 @@
+PKG_VERSION=2.21.2
+ARCHIVE=util-linux-$(PKG_VERSION).tar.gz
+URI=https://www.kernel.org/pub/linux/utils/util-linux/v2.21/util-linux-2.21.2.tar.gz
+SHA1SUM=f6f9ed2d4b1d93b870e2c52604601cb10bd2feaf
+SHA256SUM=0587c3568bfb726593fd59763a0ef0f266d5d2564be31a35f56bc8d46ea55aeb
+
+all: apt-builder-fetch apt-builder-build
+
+apt-builder-fetch: fetch-src
+	cp -a debian src
+	cd src && dch -v $(PKG_VERSION)-shopify1 "Create local backport package."
+
+fetch-src:
+	wget -nc "$(URI)"
+	@echo "$(SHA1SUM)  $(ARCHIVE)" | sha1sum --check
+	@echo "$(SHA256SUM)  $(ARCHIVE)" | sha256sum --check
+	rm -rf src && mkdir src
+	tar --strip-components=1 -C src -zxf $(ARCHIVE)
+
+apt-builder-deps:
+	# noop
+
+apt-builder-build:
+	cd src && debuild -i -us -uc -b
+	mv *.deb *.changes ..

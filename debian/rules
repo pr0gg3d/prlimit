@@ -1,0 +1,22 @@
+#!/usr/bin/make -f
+# vim: ft=make
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	$(MAKE) -C sys-utils prlimit
+
+override_dh_auto_test:
+	true
+
+override_dh_auto_install:
+	mkdir -p $$(pwd)/debian/tmp/usr/bin $$(pwd)/debian/tmp/usr/share/man/man1
+	cp sys-utils/prlimit $$(pwd)/debian/tmp/usr/bin
+	cp sys-utils/prlimit.1 $$(pwd)/debian/tmp/usr/share/man/man1
