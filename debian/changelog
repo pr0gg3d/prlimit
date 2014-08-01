@@ -1,3 +1,9 @@
+util-linux (2.21.2-shopify2) precise; urgency=medium
+
+  * Create local backport package.
+
+ -- Adrian Irving-Beer <wisq@sandvich.local>  Fri, 01 Aug 2014 10:12:08 -0400
+
 util-linux (2.20.1-5.1ubuntu20) trusty; urgency=medium
 
   * Revert the previous change, as it subtly perturbs apt's unlooping

@@ -8,7 +8,6 @@ all: apt-builder-fetch apt-builder-build
 
 apt-builder-fetch: fetch-src
 	cp -a debian src
-	cd src && dch -v $(PKG_VERSION)-shopify1 "Create local backport package."
 
 fetch-src:
 	wget -nc "$(URI)"
